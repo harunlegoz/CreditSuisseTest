@@ -21,6 +21,15 @@ namespace CreditSuisseTest.Library
         }
     }
 
+    public class InvalidAmountException : BusinessException
+    {
+        public InvalidAmountException()
+            : base("Specified amount is not valid for this card.")
+        {
+
+        }
+    }
+
     public class NotEnoughBalanceException : BusinessException
     {
         public NotEnoughBalanceException()

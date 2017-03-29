@@ -2,24 +2,17 @@
 
 namespace CreditSuisseTest.Library
 {
-    public class VendingMachine
+    public class VendingMachine : IVendingMachine
     {
-        private int _count = 25;
-        private int _price = 50;
-
+        private const int _price = 50;
+        
         public VendingMachine()
         {
         }
 
-        public int Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count { get; private set; } = 25;
 
-        public void Vend(int requestedCount, CashCard cashCard, string pin)
+        public void Vend(int requestedCount, ICashCard cashCard, string pin)
         {
             if (cashCard == null)
                 throw new ArgumentNullException("cashCard");
@@ -27,7 +20,7 @@ namespace CreditSuisseTest.Library
             if (string.IsNullOrEmpty(pin))
                 throw new ArgumentNullException("pin");
 
-            if (requestedCount > _count)
+            if (requestedCount > Count)
                 throw new NotEnoughItemsException();
 
             var amount = requestedCount * _price;
@@ -35,7 +28,12 @@ namespace CreditSuisseTest.Library
             cashCard.EnterPIN(pin);
             cashCard.Charge(amount);
 
-            _count -= requestedCount;
+            Decrease(requestedCount);
+        }
+
+        private void Decrease(int requestedCount)
+        {
+            Count -= requestedCount;
         }
     }
 }

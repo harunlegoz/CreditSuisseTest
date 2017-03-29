@@ -2,13 +2,13 @@
 
 namespace CreditSuisseTest.Library
 {
-    public class CashCard
+    public class CashCard : ICashCard
     {
-        private Account _account;
+        private IAccount _account;
         private string _pinCode;
         private bool _unlocked = false;
 
-        public CashCard(Account account, string pinCode)
+        public CashCard(IAccount account, string pinCode)
         {
             this._account = account;
             this._pinCode = pinCode;

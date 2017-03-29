@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace CreditSuisseTest.Library
 {
-    public class Account
+    public class Account : IAccount
     {
         private float _balance;
         
@@ -26,10 +26,13 @@ namespace CreditSuisseTest.Library
             }
         }
 
-        internal void Withdraw(float amount)
+        public void Withdraw(float amount)
         {
             lock (this)
             {
+                if (amount < 0)
+                    throw new InvalidAmountException();
+
                 if (_balance - amount < 0)
                     throw new NotEnoughBalanceException();
 
